@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Website</title>
+</head>
+<body>
+<h3>Form Requirements</h3>
+<div>
+
+</div>
+<form action="register" method="post">
+{% csrf_token %}
+    <input type="text" name="name" placeholder="enter your name"><br>
+    <input type="date" name="DOB " placeholder="enter your DOB"><br>
+    <input type="number" name="AGE" placeholder="enter your AGE"><br>
+    <input type="email" name="email" placeholder="enter your email"><br>
+    <input type="number" name="mobile number" placeholder="enter mobile number"><br>
+        <input type="text" name="Address" placeholder="enter your Address"><br>
+
+    <label for="gender">Gender:</label>
+      <input type="radio" id="male" name="gender" value="male">
+      <label for="male">Male</label>
+       <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Female</label><br><br>
+
+     <label for="Account_type">Account Type:</label>
+      <input type="radio" id="Savings Account" name="Account_type" value="Savings Account">
+      <label for="Savings Account">Savings Account</label>
+       <input type="radio" id="Current Account" name="Account_type" value="Current Account">
+    <label for="Current Account">Current Account</label><br><br>
+
+    <label for="Materials_Provided">Materials Provided:</label><br>
+      <input type="checkbox" id="Debit Card" name="Debit Card" value="Debit Card">
+      <label for="Debit Card">Debit Card</label><br>
+       <input type="checkbox" id="Credit Card" name="Credit Card" value="Credit Card">
+    <label for="Credit Card">Credit Card</label><br>
+ <input type="checkbox" id="Cheque Book" name="Cheque Book" value="Cheque Book">
+    <label for="Cheque Book">Cheque Book</label><br><br>
+
+
+<form action="/action_page.php">
+    <label for="district">District:</label>
+        <select name="district" id="districtDropdown"  onchange="updateTaluks()" >
+       <option value="" disabled selected>Select District</option>
+       <option value="Ernakulam">Ernakulam</option>
+         <option value="Palakkad">Palakkad</option>
+        <option value="Kozhikode">Kozhikode</option>
+        <option value="Thrissur">Thrissur</option>
+         <option value="Kottayam">Kottayam</option>
+    </select>
+
+
+
+    <label for="taluk">Branch:</label>
+    <select id="talukDropdown" >
+        <option value="" disabled selected>Select Branch</option>
+    </select>
+
+
+    <br><br>
+    <input type="submit" value="submit">
+</form>
+
+
+
+
+<script>
+    function updateTaluks() {
+        var districtDropdown = document.getElementById("districtDropdown");
+        var talukDropdown = document.getElementById("talukDropdown");
+        var selectedDistrict = districtDropdown.value;
+
+        // Clear previous taluks
+        talukDropdown.innerHTML = '<option value="" disabled selected>Select Taluk</option>';
+
+        // Fetch taluks for the selected district (replace this with your server-side logic)
+        var taluks = getTaluks(selectedDistrict);
+
+        // Populate the taluk dropdown
+        taluks.forEach(function(taluk) {
+            var option = document.createElement("option");
+            option.value = taluk;
+            option.text = taluk;
+            talukDropdown.appendChild(option);
+        });
+
+        // Enable the taluk dropdown
+        talukDropdown.disabled = false;
+    }
+
+    // Mock function to get taluks for the selected district
+    function getTaluks(selectedDistrict) {
+        var taluksData = {
+            'Ernakulam': ['Aluva', 'Edapally', 'Kalamasherry'],
+            'Palakkad': ['Kollengode', 'Nenmara', 'Pattambi'],
+            'Kozhikode': ['Aredathupalam', 'mukkam', 'Olavana'],
+            'Thrissur': ['Athirappilly', 'Thiruvambadi', 'Chavakkad'],
+            'Kottayam': ['Cheriyapally', 'Kumaranalloor', 'Kumarakom']
+        };
+
+        return taluksData[selectedDistrict] || [];
+    }
+    </script>
+
+
+
+
+
+
+
+    <!-- <label for="district" >District:</label>
+        <select id="Dropdown" name="district">
+            <option disabled selected>Select District</option>
+            {% for district in districts %}
+                <option value="{{ district }}">{{ district }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="branch">Branch:</label>
+        <select id="branch" name="branch">
+            <option disabled selected>Select Branch</option>
+            {% if district %}
+                {% for branch in districts %}
+                    <option value="{{ branch }}">{{ branch }}</option>
+
+                {% endfor %}
+            {% endif %}
+        </select> -->
+
+
+
+<br>
+<button><a href="{% url 'formsapp:form' %}"  class="btn btn-secondary">submit</a></button>
+          <button><a href="{% url 'dummyyapp:dummyy' %}"  class="btn btn-secondary">Logout</a></button>
+</body>
+</html>
+
